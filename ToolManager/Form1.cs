@@ -24,68 +24,84 @@ namespace ToolManager
             form1 = this;
         }
 
-        private async void Form1_Load(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
             Config.Setup();
-            await LiveEditor.AutoUpdate();
+            checkBox_MM.Checked = ModManager.CheckFile() ? Properties.Settings.Default.MMChecked : false;
+            checkBox_LE.Checked = LiveEditor.CheckFile() ? Properties.Settings.Default.LEChecked : false;
+            checkBox_CE.Checked = CEngine.CheckFile() ? Properties.Settings.Default.CETChecked : false;
         }
 
-        private void button_mm_Click(object sender, EventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ModManager.Run();
-        }
-
-        private void button_le_Click(object sender, EventArgs e)
-        {
-            LiveEditor.Run();
-        }
-
-        private void button_ce_Click(object sender, EventArgs e)
-        {
-            CEngine.Run();
-        }
-
-        private void button_mmle_Click(object sender, EventArgs e)
-        {
-            ModManager.Run();
-            LiveEditor.Run();
-        }
-
-        private void button_lece_Click(object sender, EventArgs e)
-        {
-            LiveEditor.Run();
-            CEngine.Run();
-        }
-
-        private void button_mmlece_Click(object sender, EventArgs e)
-        {
-            ModManager.Run();
-            LiveEditor.Run();
-            CEngine.Run();
-        }
-
-        private void button_mmr_Click(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.ModManagerPath = string.Empty;
+            Properties.Settings.Default.MMChecked = checkBox_MM.Checked;
+            Properties.Settings.Default.LEChecked = checkBox_LE.Checked;
+            Properties.Settings.Default.CETChecked = checkBox_CE.Checked;
             Properties.Settings.Default.Save();
         }
 
-        private void button_cer_Click(object sender, EventArgs e)
+        private void checkBox_MM_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.CETrainerPath = string.Empty;
+            if (!checkBox_MM.Checked) return;
+            if (!ModManager.CheckFile() && !ModManager.Setup()) checkBox_MM.Checked = false;
+        }
+
+        private async void checkBox_LE_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox_LE.Checked) return;
+            if (!LiveEditor.CanRun)
+            {
+                groupBox_tools.Enabled = false;
+                groupBox_controller.Enabled = false;
+                await LiveEditor.AutoUpdate();
+            }
+        }
+
+        private void checkBox_CE_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox_CE.Checked) return;
+            if (!CEngine.CheckFile() && !CEngine.Setup()) checkBox_CE.Checked = false;
+        }
+
+        private void button_run_Click(object sender, EventArgs e)
+        {
+            if (checkBox_MM.Checked) ModManager.Run();
+            if (checkBox_LE.Checked) LiveEditor.Run();
+            if (checkBox_CE.Checked) CEngine.Run();
+        }
+
+        private void button_reset_Click(object sender, EventArgs e)
+        {
+            if (!checkBox_MM.Checked && !checkBox_CE.Checked) return;
+
+            if (checkBox_MM.Checked)
+            {
+                Properties.Settings.Default.MMPath = string.Empty;
+                Properties.Settings.Default.MMChecked = false;
+                checkBox_MM.Checked = false;
+            }
+
+            if (checkBox_CE.Checked)
+            {
+                Properties.Settings.Default.CETrainerPath = string.Empty;
+                Properties.Settings.Default.CETChecked = false;
+                checkBox_CE.Checked = false;
+            }
+
             Properties.Settings.Default.Save();
+            MessageBox.Show("Complete Reset", "Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.button_le.Enabled = LiveEditor.CanRun;
+            LiveEditor.CanRun = LiveEditor.CheckFile();
 
-            ModManager.CanRun = ModManager.CheckFile();
-            CEngine.CanRun = CEngine.CheckFile();
-
-            this.button_mmle.Enabled = ModManager.CanRun && LiveEditor.CanRun;
-            this.button_lece.Enabled = LiveEditor.CanRun && CEngine.CanRun;
-            this.button_mmlece.Enabled = ModManager.CanRun && LiveEditor.CanRun && CEngine.CanRun;
+            if (LiveEditor.CanRun)
+            {
+                groupBox_tools.Enabled = true;
+                groupBox_controller.Enabled = true;
+            }
+            else checkBox_LE.Checked = false;
         }
     }
 }

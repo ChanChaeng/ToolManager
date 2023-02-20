@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ToolManager
 {
@@ -18,16 +19,15 @@ namespace ToolManager
         private static string dirName;
         private static string dirPath;
 
+        public static bool CheckFile() => File.Exists(Properties.Settings.Default.LELauncherPath);
+
         public static void Run()
         {
-            string path = Properties.Settings.Default.LiveEditorLauncherPath;
-            string fileName = Path.GetFileName(path);
             foreach (var proc in Process.GetProcesses())
-            {
-                if (!proc.ProcessName.Contains(fileName)) continue;
-                if (proc.MainModule.FileName == path) proc.Kill();
-            }
-            Process.Start(path);
+                if (proc.ProcessName.Contains("Launcher") && 
+                    proc.MainModule.FileName == Properties.Settings.Default.LELauncherPath) return;
+
+            Process.Start(Properties.Settings.Default.LELauncherPath);
         }
 
         public static async Task AutoUpdate()
@@ -38,11 +38,7 @@ namespace ToolManager
             foreach (var dir in Directory.GetDirectories(Config.ToolsPath))
             {
                 string tmpPathName = Path.GetFileName(dir);
-                if (tmpPathName.Contains("Live Editor") && tmpPathName.Contains(releases[0].TagName))
-                {
-                    CanRun = true;
-                    return;
-                }
+                if (tmpPathName.Contains("Live Editor") && tmpPathName.Contains(releases[0].TagName)) return;
                 else Directory.Delete(dir);
             }
 
@@ -64,9 +60,10 @@ namespace ToolManager
         {
             ZipFile.ExtractToDirectory(zipPath, dirPath);
             File.Delete(zipPath);
-            Properties.Settings.Default.LiveEditorLauncherPath = Path.Combine(dirPath, "Launcher.exe");
+            Properties.Settings.Default.LELauncherPath = Path.Combine(dirPath, "Launcher.exe");
             Properties.Settings.Default.Save();
-            CanRun = true;
+            Form1.form1.checkBox_LE.Checked = true;
+            MessageBox.Show("Complete Update", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

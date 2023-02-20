@@ -26,24 +26,24 @@ namespace ToolManager.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LiveEditorLauncherPath {
+        public string MMPath {
             get {
-                return ((string)(this["LiveEditorLauncherPath"]));
+                return ((string)(this["MMPath"]));
             }
             set {
-                this["LiveEditorLauncherPath"] = value;
+                this["MMPath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ModManagerPath {
+        public string LELauncherPath {
             get {
-                return ((string)(this["ModManagerPath"]));
+                return ((string)(this["LELauncherPath"]));
             }
             set {
-                this["ModManagerPath"] = value;
+                this["LELauncherPath"] = value;
             }
         }
         
@@ -56,6 +56,42 @@ namespace ToolManager.Properties {
             }
             set {
                 this["CETrainerPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MMChecked {
+            get {
+                return ((bool)(this["MMChecked"]));
+            }
+            set {
+                this["MMChecked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LEChecked {
+            get {
+                return ((bool)(this["LEChecked"]));
+            }
+            set {
+                this["LEChecked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CETChecked {
+            get {
+                return ((bool)(this["CETChecked"]));
+            }
+            set {
+                this["CETChecked"] = value;
             }
         }
     }
