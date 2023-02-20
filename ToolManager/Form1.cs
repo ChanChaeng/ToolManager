@@ -24,11 +24,12 @@ namespace ToolManager
             form1 = this;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
             Config.Setup();
+            await LiveEditor.AutoUpdate();
             checkBox_MM.Checked = ModManager.CheckFile() ? Properties.Settings.Default.MMChecked : false;
-            checkBox_LE.Checked = LiveEditor.CheckFile() ? Properties.Settings.Default.LEChecked : false;
+            checkBox_LE.Checked = ModManager.CheckFile() ? Properties.Settings.Default.LEChecked : false;
             checkBox_CE.Checked = CEngine.CheckFile() ? Properties.Settings.Default.CETChecked : false;
         }
 
@@ -49,7 +50,7 @@ namespace ToolManager
         private async void checkBox_LE_CheckedChanged(object sender, EventArgs e)
         {
             if (!checkBox_LE.Checked) return;
-            if (!LiveEditor.CanRun)
+            if (!LiveEditor.CheckFile())
             {
                 groupBox_tools.Enabled = false;
                 groupBox_controller.Enabled = false;
@@ -94,14 +95,7 @@ namespace ToolManager
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            LiveEditor.CanRun = LiveEditor.CheckFile();
-
-            if (LiveEditor.CanRun)
-            {
-                groupBox_tools.Enabled = true;
-                groupBox_controller.Enabled = true;
-            }
-            else checkBox_LE.Checked = false;
+            if (!LiveEditor.CheckFile()) checkBox_LE.Checked = false;
         }
     }
 }

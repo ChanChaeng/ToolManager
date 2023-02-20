@@ -32,12 +32,12 @@ namespace ToolManager
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox_tools = new System.Windows.Forms.GroupBox();
-            this.checkBox_MM = new System.Windows.Forms.CheckBox();
-            this.checkBox_LE = new System.Windows.Forms.CheckBox();
             this.checkBox_CE = new System.Windows.Forms.CheckBox();
+            this.checkBox_LE = new System.Windows.Forms.CheckBox();
+            this.checkBox_MM = new System.Windows.Forms.CheckBox();
             this.groupBox_controller = new System.Windows.Forms.GroupBox();
-            this.button_run = new System.Windows.Forms.Button();
             this.button_reset = new System.Windows.Forms.Button();
+            this.button_run = new System.Windows.Forms.Button();
             this.groupBox_tools.SuspendLayout();
             this.groupBox_controller.SuspendLayout();
             this.SuspendLayout();
@@ -60,30 +60,6 @@ namespace ToolManager
             this.groupBox_tools.TabStop = false;
             this.groupBox_tools.Text = "Tools";
             // 
-            // checkBox_MM
-            // 
-            this.checkBox_MM.AutoSize = true;
-            this.checkBox_MM.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_MM.Location = new System.Drawing.Point(9, 26);
-            this.checkBox_MM.Name = "checkBox_MM";
-            this.checkBox_MM.Size = new System.Drawing.Size(119, 23);
-            this.checkBox_MM.TabIndex = 0;
-            this.checkBox_MM.Text = "Mod Manager";
-            this.checkBox_MM.UseVisualStyleBackColor = true;
-            this.checkBox_MM.CheckedChanged += new System.EventHandler(this.checkBox_MM_CheckedChanged);
-            // 
-            // checkBox_LE
-            // 
-            this.checkBox_LE.AutoSize = true;
-            this.checkBox_LE.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_LE.Location = new System.Drawing.Point(134, 26);
-            this.checkBox_LE.Name = "checkBox_LE";
-            this.checkBox_LE.Size = new System.Drawing.Size(96, 23);
-            this.checkBox_LE.TabIndex = 0;
-            this.checkBox_LE.Text = "Live Editor";
-            this.checkBox_LE.UseVisualStyleBackColor = true;
-            this.checkBox_LE.CheckedChanged += new System.EventHandler(this.checkBox_LE_CheckedChanged);
-            // 
             // checkBox_CE
             // 
             this.checkBox_CE.AutoSize = true;
@@ -95,6 +71,31 @@ namespace ToolManager
             this.checkBox_CE.Text = "Cheat Engine";
             this.checkBox_CE.UseVisualStyleBackColor = true;
             this.checkBox_CE.CheckedChanged += new System.EventHandler(this.checkBox_CE_CheckedChanged);
+            // 
+            // checkBox_LE
+            // 
+            this.checkBox_LE.AutoSize = true;
+            this.checkBox_LE.Enabled = false;
+            this.checkBox_LE.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_LE.Location = new System.Drawing.Point(134, 26);
+            this.checkBox_LE.Name = "checkBox_LE";
+            this.checkBox_LE.Size = new System.Drawing.Size(96, 23);
+            this.checkBox_LE.TabIndex = 0;
+            this.checkBox_LE.Text = "Live Editor";
+            this.checkBox_LE.UseVisualStyleBackColor = true;
+            this.checkBox_LE.CheckedChanged += new System.EventHandler(this.checkBox_LE_CheckedChanged);
+            // 
+            // checkBox_MM
+            // 
+            this.checkBox_MM.AutoSize = true;
+            this.checkBox_MM.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_MM.Location = new System.Drawing.Point(9, 26);
+            this.checkBox_MM.Name = "checkBox_MM";
+            this.checkBox_MM.Size = new System.Drawing.Size(119, 23);
+            this.checkBox_MM.TabIndex = 0;
+            this.checkBox_MM.Text = "Mod Manager";
+            this.checkBox_MM.UseVisualStyleBackColor = true;
+            this.checkBox_MM.CheckedChanged += new System.EventHandler(this.checkBox_MM_CheckedChanged);
             // 
             // groupBox_controller
             // 
@@ -108,16 +109,6 @@ namespace ToolManager
             this.groupBox_controller.TabStop = false;
             this.groupBox_controller.Text = "Controller";
             // 
-            // button_run
-            // 
-            this.button_run.Location = new System.Drawing.Point(6, 26);
-            this.button_run.Name = "button_run";
-            this.button_run.Size = new System.Drawing.Size(168, 50);
-            this.button_run.TabIndex = 0;
-            this.button_run.Text = "RUN";
-            this.button_run.UseVisualStyleBackColor = true;
-            this.button_run.Click += new System.EventHandler(this.button_run_Click);
-            // 
             // button_reset
             // 
             this.button_reset.Location = new System.Drawing.Point(179, 26);
@@ -127,6 +118,16 @@ namespace ToolManager
             this.button_reset.Text = "RESET";
             this.button_reset.UseVisualStyleBackColor = true;
             this.button_reset.Click += new System.EventHandler(this.button_reset_Click);
+            // 
+            // button_run
+            // 
+            this.button_run.Location = new System.Drawing.Point(6, 26);
+            this.button_run.Name = "button_run";
+            this.button_run.Size = new System.Drawing.Size(168, 50);
+            this.button_run.TabIndex = 0;
+            this.button_run.Text = "RUN";
+            this.button_run.UseVisualStyleBackColor = true;
+            this.button_run.Click += new System.EventHandler(this.button_run_Click);
             // 
             // Form1
             // 
@@ -152,13 +153,13 @@ namespace ToolManager
 
         #endregion
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.GroupBox groupBox_tools;
         private System.Windows.Forms.CheckBox checkBox_CE;
         private System.Windows.Forms.CheckBox checkBox_MM;
-        private System.Windows.Forms.GroupBox groupBox_controller;
         private System.Windows.Forms.Button button_reset;
         private System.Windows.Forms.Button button_run;
         public System.Windows.Forms.CheckBox checkBox_LE;
+        public System.Windows.Forms.GroupBox groupBox_tools;
+        public System.Windows.Forms.GroupBox groupBox_controller;
     }
 }
 

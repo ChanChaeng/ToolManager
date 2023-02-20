@@ -38,7 +38,11 @@ namespace ToolManager
             foreach (var dir in Directory.GetDirectories(Config.ToolsPath))
             {
                 string tmpPathName = Path.GetFileName(dir);
-                if (tmpPathName.Contains("Live Editor") && tmpPathName.Contains(releases[0].TagName)) return;
+                if (tmpPathName.Contains("Live Editor") && tmpPathName.Contains(releases[0].TagName))
+                {
+                    Form1.form1.checkBox_LE.Enabled = true;
+                    return;
+                }
                 else Directory.Delete(dir);
             }
 
@@ -62,7 +66,10 @@ namespace ToolManager
             File.Delete(zipPath);
             Properties.Settings.Default.LELauncherPath = Path.Combine(dirPath, "Launcher.exe");
             Properties.Settings.Default.Save();
-            Form1.form1.checkBox_LE.Checked = true;
+            Form1.form1.checkBox_LE.Checked = Properties.Settings.Default.LEChecked;
+            Form1.form1.checkBox_LE.Enabled = true;
+            Form1.form1.groupBox_tools.Enabled = true;
+            Form1.form1.groupBox_controller.Enabled = true;
             MessageBox.Show("Complete Update", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
