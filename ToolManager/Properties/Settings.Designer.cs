@@ -94,5 +94,17 @@ namespace ToolManager.Properties {
                 this["CETChecked"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LEVersion {
+            get {
+                return ((string)(this["LEVersion"]));
+            }
+            set {
+                this["LEVersion"] = value;
+            }
+        }
     }
 }

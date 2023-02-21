@@ -44,7 +44,6 @@ namespace ToolManager
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // groupBox_tools
@@ -52,6 +51,7 @@ namespace ToolManager
             this.groupBox_tools.Controls.Add(this.checkBox_CE);
             this.groupBox_tools.Controls.Add(this.checkBox_LE);
             this.groupBox_tools.Controls.Add(this.checkBox_MM);
+            this.groupBox_tools.Enabled = false;
             this.groupBox_tools.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_tools.Location = new System.Drawing.Point(12, 12);
             this.groupBox_tools.Name = "groupBox_tools";
@@ -101,6 +101,7 @@ namespace ToolManager
             // 
             this.groupBox_controller.Controls.Add(this.button_reset);
             this.groupBox_controller.Controls.Add(this.button_run);
+            this.groupBox_controller.Enabled = false;
             this.groupBox_controller.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox_controller.Location = new System.Drawing.Point(12, 78);
             this.groupBox_controller.Name = "groupBox_controller";
@@ -152,7 +153,6 @@ namespace ToolManager
         }
 
         #endregion
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox checkBox_CE;
         private System.Windows.Forms.CheckBox checkBox_MM;
         private System.Windows.Forms.Button button_reset;
@@ -160,6 +160,7 @@ namespace ToolManager
         public System.Windows.Forms.CheckBox checkBox_LE;
         public System.Windows.Forms.GroupBox groupBox_tools;
         public System.Windows.Forms.GroupBox groupBox_controller;
+        public System.Windows.Forms.Timer timer1;
     }
 }
 

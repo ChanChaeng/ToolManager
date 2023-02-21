@@ -19,7 +19,17 @@ namespace ToolManager
         private static string dirName;
         private static string dirPath;
 
-        public static bool CheckFile() => File.Exists(Properties.Settings.Default.LELauncherPath);
+        public static bool CheckFile()
+        {
+            foreach (var dir in Directory.GetDirectories(Config.ToolsPath))
+            {
+                string tmpPathName = Path.GetFileName(dir);
+                if (tmpPathName.Contains("Live Editor") && tmpPathName.Contains(Properties.Settings.Default.LEVersion)) return true;
+            }
+
+            Form1.form1.checkBox_LE.Checked = false;
+            return false;
+        }
 
         public static void Run()
         {
@@ -32,8 +42,11 @@ namespace ToolManager
 
         public static async Task AutoUpdate()
         {
+            Config.Setup();
             var client = new GitHubClient(new ProductHeaderValue(Config.Creator));
             var releases = await client.Repository.Release.GetAll(Creator, ProjectName);
+            Properties.Settings.Default.LEVersion = releases[0].TagName;
+            Properties.Settings.Default.Save();
 
             foreach (var dir in Directory.GetDirectories(Config.ToolsPath))
             {
@@ -41,11 +54,19 @@ namespace ToolManager
                 if (tmpPathName.Contains("Live Editor") && tmpPathName.Contains(releases[0].TagName))
                 {
                     Form1.form1.checkBox_LE.Enabled = true;
+                    Form1.form1.groupBox_tools.Enabled = true;
+                    Form1.form1.groupBox_controller.Enabled = true;
+                    Form1.form1.checkBox_LE.Checked = Properties.Settings.Default.LEChecked;
                     return;
                 }
-                else Directory.Delete(dir);
             }
 
+            Form1.form1.checkBox_LE.Checked = false;
+            Form1.form1.checkBox_LE.Enabled = false;
+            Form1.form1.groupBox_tools.Enabled = false;
+            Form1.form1.groupBox_controller.Enabled = false;
+            Directory.Delete(Config.ToolsPath, true);
+            Config.Setup();
             dirName = releases[0].Name;
             dirPath = Path.Combine(Config.ToolsPath, dirName);
             string downloadURL = string.Empty;
@@ -66,11 +87,12 @@ namespace ToolManager
             File.Delete(zipPath);
             Properties.Settings.Default.LELauncherPath = Path.Combine(dirPath, "Launcher.exe");
             Properties.Settings.Default.Save();
-            Form1.form1.checkBox_LE.Checked = Properties.Settings.Default.LEChecked;
             Form1.form1.checkBox_LE.Enabled = true;
             Form1.form1.groupBox_tools.Enabled = true;
             Form1.form1.groupBox_controller.Enabled = true;
+            Form1.form1.checkBox_LE.Checked = Properties.Settings.Default.LEChecked;
             MessageBox.Show("Complete Update", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Form1.form1.timer1.Start();
         }
     }
 }
