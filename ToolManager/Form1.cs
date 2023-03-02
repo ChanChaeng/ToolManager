@@ -32,10 +32,13 @@ namespace ToolManager
 
             checkBox_MM.Checked = ModManager.CheckFile() ? Properties.Settings.Default.MMChecked : false;
             checkBox_CE.Checked = CEngine.CheckFile() ? Properties.Settings.Default.CETChecked : false;
+
+            GlobalHook.SetHook();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            GlobalHook.UnHook();
             Properties.Settings.Default.MMChecked = checkBox_MM.Checked;
             Properties.Settings.Default.LEChecked = checkBox_LE.Checked;
             Properties.Settings.Default.CETChecked = checkBox_CE.Checked;
