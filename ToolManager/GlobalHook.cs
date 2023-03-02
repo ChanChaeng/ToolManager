@@ -46,12 +46,12 @@ namespace ToolManager
 
         private static bool CheckFIFA()
         {
-            return FindWindow(null, "FIFA23") == GetForegroundWindow();
+            return FindWindow(null, "FIFA 23") == GetForegroundWindow();
         }
 
         private static IntPtr hookProc(int code, IntPtr wParam, IntPtr lParam)
         {
-            if (code >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+            if (code >= 0 && wParam == (IntPtr)WM_KEYDOWN && CheckFIFA())
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 if (vkCode == 46) // del = 46
@@ -64,7 +64,7 @@ namespace ToolManager
                 }
             }
 
-            if (code >= 0 && wParam == (IntPtr)WM_KEYUP)
+            if (code >= 0 && wParam == (IntPtr)WM_KEYUP && CheckFIFA())
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 if (vkCode == 46) // del = 46
